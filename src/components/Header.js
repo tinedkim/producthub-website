@@ -6,6 +6,8 @@ import { ToastsContainer, ToastsStore } from "react-toasts";
 import { MDBBtn } from "mdbreact";
 import logo from "../references/logo.png";
 import "../App.css";
+import axios from "axios"
+import qs from "qs"
 
 class Header extends Component {
   constructor(props) {
@@ -18,12 +20,16 @@ class Header extends Component {
       email: "",
       password: "",
       modalIsOpen: false,
+      newEmail: "",
+      newPassword:"",
       newFirstName: "",
-      newEmail: ""
+      newLastName:"",
+      newContact:""
     };
     this.changeState1 = this.changeState1.bind(this);
     this.changeState2 = this.changeState2.bind(this);
     this.changeState3 = this.changeState3.bind(this);
+    this.createNewUser = this.createNewUser.bind(this);
   }
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -32,12 +38,24 @@ class Header extends Component {
     this.setState({ modalIsOpen: false });
   }
 
+  newEmailChange = event => {
+    this.setState({ newEmail: event.target.value });
+  };
+
+  newPasswordChange = event => {
+    this.setState({ newPassword: event.target.value });
+  };
+
   newFirstNameChange = event => {
     this.setState({ newFirstName: event.target.value });
   };
 
-  newEmailChange = event => {
-    this.setState({ newEmail: event.target.value });
+  newLastNameChange = event => {
+    this.setState({ newLastName: event.target.value });
+  };
+
+  newContactChange = event => {
+    this.setState({ newContact: event.target.value });
   };
 
   handleSubmit = event => {
@@ -118,6 +136,34 @@ class Header extends Component {
     .catch(err => console.error('Email failed to send!', err),
     //this.resetForm()
     );
+  }
+
+  createNewUser() {
+    var newUserData = {
+      email: this.state.newEmail,
+      password: this.state.newPassword,
+      firstName: this.state.newFirstName,
+      lastName: this.state.newLastName,
+      contactNumber: this.state.newContact,
+      points: 0
+    };
+
+    return axios({
+      method: "post",
+      url: "http://localhost:5000/api/users/register",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: qs.stringify(newUserData)
+    })
+      .then(response => {
+        if (response["data"] == "success") {
+          this.sendEmail(newUserData);
+          this.changeState2();
+        }
+      })
+      .catch(err => {});
   }
 
   render() {
@@ -232,7 +278,6 @@ class Header extends Component {
                         value={this.state.newEmail}
                         name="newEmail"
                         id="newEmail"
-                        //onChange={this.onChange}
                         onChange={this.newEmailChange}
                       />
                     </Form.Group>
@@ -244,7 +289,7 @@ class Header extends Component {
                         placeholder="Password"
                         value={this.state.newPassword}
                         name="newPassword"
-                        onChange={this.onChange}
+                        onChange={this.newPasswordChange}
                       />
                     </Form.Group>
                   </Form.Row>
@@ -256,7 +301,6 @@ class Header extends Component {
                       value={this.state.newFirstName}
                       name="newFirstName"
                       id="newFirstName"
-                      //onChange={this.onChange}
                       onChange={this.newFirstNameChange}
                     />
                   </Form.Group>
@@ -267,7 +311,7 @@ class Header extends Component {
                       //placeholder=""
                       value={this.state.newLastName}
                       name="newLastName"
-                      onChange={this.onChange}
+                      onChange={this.newLastNameChange}
                     />
                   </Form.Group>
 
@@ -279,7 +323,7 @@ class Header extends Component {
                       <Form.Control
                         value={this.state.newContact}
                         name="newContact"
-                        onChange={this.onChange}
+                        onChange={this.newContactChange}
                       />
                     </Form.Group>
                   </Form.Row>

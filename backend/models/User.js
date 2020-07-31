@@ -18,7 +18,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    phoneNumber: {
+    contactNumber: {
         type: String,
         required: true
     }

@@ -9,7 +9,7 @@ module.exports = function validateRegisterInput(data) {
     data.password = !isEmpty(data.password) ? data.password : "";
     data.firstName = !isEmpty(data.firstName) ? data.firstName : "";
     data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
-    data.phoneNumber = !isEmpty(data.phoneNumber) ? data.phoneNumber : "";
+    data.contactNumber = !isEmpty(data.contactNumber) ? data.contactNumber : "";
 
     // Email checks
     if (Validator.isEmpty(data.email)) {
@@ -37,9 +37,9 @@ module.exports = function validateRegisterInput(data) {
     }
 
     // Phone number checks
-    if (Validator.isEmpty(data.phoneNumber)) {
+    if (Validator.isEmpty(data.contactNumber)) {
         errors.name = "Phone Number field is required";
-    } else if (!Validator.isMobilePhone(data.phoneNumber)) {
+    } else if (!Validator.isMobilePhone(data.contactNumber)) {
         errors.name = "Phone Number is invalid"
     }
 
