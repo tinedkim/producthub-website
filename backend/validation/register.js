@@ -11,14 +11,14 @@ module.exports = function validateRegisterInput(data) {
     data.lastName = !isEmpty(data.lastName) ? data.lastName : "";
     data.contactNumber = !isEmpty(data.contactNumber) ? data.contactNumber : "";
 
-    // Email checks
+    // Email validation
     if (Validator.isEmpty(data.email)) {
         errors.email = "Email field is required";
     } else if (!Validator.isEmail(data.email)) {
         errors.email = "Email is invalid";
     }
 
-    // Password checks
+    // Password validation
     if (Validator.isEmpty(data.password)) {
         errors.password = "Password field is required";
     } else if (!Validator.isLength(data.password, {
@@ -28,7 +28,7 @@ module.exports = function validateRegisterInput(data) {
         errors.password = "Password must be at least 6 characters";
     }
 
-    // Name checks
+    // Name validation
     if (Validator.isEmpty(data.firstName)) {
         errors.name = "First Name field is required";
     }
@@ -36,7 +36,7 @@ module.exports = function validateRegisterInput(data) {
         errors.name = "Last Name field is required";
     }
 
-    // Phone number checks
+    // Phone number validation
     if (Validator.isEmpty(data.contactNumber)) {
         errors.name = "Phone Number field is required";
     } else if (!Validator.isMobilePhone(data.contactNumber)) {
