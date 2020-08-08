@@ -6,8 +6,10 @@ import { ToastsContainer, ToastsStore } from "react-toasts";
 import { MDBBtn } from "mdbreact";
 import logo from "../references/logo.png";
 import "../App.css";
-import axios from "axios"
-import qs from "qs"
+import axios from "axios";
+import qs from "qs";
+import setAuthToken from "../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
 
 class Header extends Component {
   constructor(props) {
@@ -30,6 +32,8 @@ class Header extends Component {
     this.changeState2 = this.changeState2.bind(this);
     this.changeState3 = this.changeState3.bind(this);
     this.createNewUser = this.createNewUser.bind(this);
+    this.sendLoginData = this.sendLoginData.bind(this);
+    this.logOut = this.logOut.bind(this);
   }
   openModal() {
     this.setState({ modalIsOpen: true });
@@ -157,13 +161,44 @@ class Header extends Component {
       },
       data: qs.stringify(newUserData)
     })
-      .then(response => {
-        if (response["data"] == "success") {
+      .then(res => {
+        if (res["data"] == "success") {
           this.sendEmail(newUserData);
           this.changeState2();
         }
       })
       .catch(err => {});
+  }
+
+  sendLoginData() {
+    var userData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    return axios({
+      method: "post",
+      url: "http://localhost:5000/api/users/login",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: qs.stringify(userData)
+    })
+      .then(res => {
+        const { token } = res.data;
+        localStorage.setItem("jwtToken", token);
+        setAuthToken(token);
+        const decoded = jwt_decode(token);
+        this.state.isLogin = true;
+      })
+      .catch(err => {});
+  }
+
+  logOut() {
+    localStorage.removeItem("jwtToken");
+    setAuthToken(false);
+    this.state.isLogin = false;
   }
 
   render() {
