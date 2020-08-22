@@ -4,7 +4,30 @@ import App from "./App";
 import * as serviceWorker from './serviceWorker';
 import "bootstrap/dist/css/bootstrap.css";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+import configureStore from "./store/store";
+import { Provider } from "react-redux";
+import { BrowserRouter } from 'react-router-dom';
+import { checkLoggedIn } from "./utils/session";
+
+
+const renderApp = preloadedState => {
+    const store = configureStore(preloadedState);
+    window.state = store.getState;
+
+    ReactDOM.render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>,
+      document.getElementById("root")
+    );
+  };
+
+
+(async () => renderApp(await checkLoggedIn()))();
+
+//ReactDOM.render(<App />, document.getElementById("root"));
 
 
 // If you want your app to work offline and load faster, you can change

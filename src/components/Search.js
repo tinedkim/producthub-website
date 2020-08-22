@@ -1,22 +1,54 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { fade, withStyles, makeStyles } from "@material-ui/core/styles";
+import InputBase from "@material-ui/core/InputBase";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+const BootstrapInput = withStyles(theme => ({
 
-const useStyles = makeStyles((theme) => ({
+  input: {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: theme.palette.common.white,
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    width: "auto",
+    padding: "10px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(","),
+    "&:focus": {
+      boxShadow: `${fade("#12517A", 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main
+    }
+  }
+}))(InputBase);
+
+const useStyles = makeStyles(theme => ({
   root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
+    display: "flex",
+    flexWrap: "wrap"
   },
 }));
 
-export default function FormPropsTextFields() {
+export default function CustomizedInputs() {
   const classes = useStyles();
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-        <TextField id="outlined-search" label="Search field" type="search" variant="outlined" />
+    <form className={classes.root} noValidate>
+      <FormControl className={classes.margin}>
+        <BootstrapInput  placeholder="Search" id="search" />
+      </FormControl>
     </form>
   );
 }
