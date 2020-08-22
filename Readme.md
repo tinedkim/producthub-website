@@ -1,2 +1,12 @@
-This the repository for our new website version. Please don't commit anything on master branch.
-Create your own branch and then create a Pull request.
+# Starting client
+"npm start dev" to start client for development
+
+
+# If port is in use:
+Windows:
+    netstat -ano | findstr :3000
+    tskill [PID]
+
+Linux/Mac:
+    lsof -i tcp:3000
+    kill -9 [PID]
