@@ -9,25 +9,29 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from 'react-router-dom';
 import { checkLoggedIn } from "./utils/session";
 
+import { PersistGate } from 'redux-persist/integration/react'
+
 
 const renderApp = preloadedState => {
-    const store = configureStore(preloadedState);
-    window.state = store.getState;
+  const ps = configureStore(preloadedState);
+  const store = ps.store;
+  const persistor = ps.persistor;
+  window.state = store.getState; // FOR DEBUGGING
 
-    ReactDOM.render(
-      <Provider store={store}>
+  ReactDOM.render(
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </Provider>,
-      document.getElementById("root")
-    );
-  };
+      </PersistGate>
+    </Provider>,
+    document.getElementById("root")
+  );
+};
 
 
 (async () => renderApp(await checkLoggedIn()))();
-
-//ReactDOM.render(<App />, document.getElementById("root"));
 
 
 // If you want your app to work offline and load faster, you can change
