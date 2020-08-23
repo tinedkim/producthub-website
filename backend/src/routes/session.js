@@ -26,10 +26,10 @@ sessionRouter.post("", async (req, res) => {
     } catch (err) {
         res.status(401).send(parseError(err));
     }
-  });
+});
 
-  // Logout
-  sessionRouter.delete("", ({ session }, res) => {
+// Logout
+sessionRouter.delete("", ({ session }, res) => {
     try {
         const user = session.user;
         if (user) {
@@ -39,15 +39,15 @@ sessionRouter.post("", async (req, res) => {
                 res.send(user);
             });
         } else {
-        throw new Error('Something went wrong');
-      }
+            throw new Error('Something went wrong');
+        }
     } catch (err) {
-      res.status(422).send(parseError(err));
+        res.status(422).send(parseError(err));
     }
-  });
+});
 
 sessionRouter.get("", ({ session: { user }}, res) => {
     res.send({ user });
-  });
+});
 
 export default sessionRouter;

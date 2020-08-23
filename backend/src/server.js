@@ -15,7 +15,7 @@ import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from
         const app = express();
         const MongoStore = connectStore(session);
 
-        //app.disable('x-powered-by');
+        app.disable('x-powered-by');
         app.use(cors());
         app.use(express.urlencoded({ extended: true }));
         app.use(express.json());
@@ -34,7 +34,7 @@ import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from
                 secure: NODE_ENV === 'production',
                 maxAge: parseInt(SESS_LIFETIME)
             }
-          }));
+        }));
 
         const apiRouter = express.Router();
         app.use('/api', apiRouter);
@@ -45,5 +45,5 @@ import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from
 
     } catch (err) {
         console.log(err)
-      }
-    })();
+    }
+})();

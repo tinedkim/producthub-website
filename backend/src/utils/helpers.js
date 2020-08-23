@@ -1,11 +1,14 @@
 export const parseError = err => {
     if (err.isJoi) {
-      return err.details[0];
+        return err.details[0];
     } else {
-      return JSON.stringify(err, Object.getOwnPropertyNames(err));
+        return JSON.stringify(err, Object.getOwnPropertyNames(err));
     }
-  };
+};
 
 export const sessionizeUser = user => {
-    return { userId: user.id, email: user.email };
-  };
+    return {
+        userId: user.id,
+        email: user.email
+    };
+};
