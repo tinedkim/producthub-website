@@ -9,7 +9,10 @@ import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from
 
 (async () => {
     try {
-        await mongoose.connect(MONGO_URI, { useNewUrlParser: true });
+        await mongoose.connect(MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
         console.log('MongoDB successfully connected');
 
         const app = express();
