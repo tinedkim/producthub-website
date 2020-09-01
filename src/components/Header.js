@@ -11,8 +11,39 @@ import Toolbar from '@material-ui/core/Toolbar';
 import {Link, BrowserRouter} from 'react-router-dom';
 import Login from './Login.js';
 import Signup from './Signup.js';
+import Logout from './Logout.js';
 
-  export default function Header() {
+
+class Home extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      isLoggedIn: true
+    };
+  }
+
+  handleClick = state => {
+    this.setState({
+      isLoggedIn: state
+    });
+  }
+  
+  render() {
+    const userButtons = () => {
+      return (
+        <div>
+          {this.state.isLoggedIn ? (
+            <Logout handleClick = {this.handleClick}/>
+          ) : (
+            <div style = {{display: "flex"}}>
+              <Login handleClick = {this.handleClick}/>
+              <Signup />
+            </div>
+          )}
+        </div>
+      );
+    }
+    
     return (
       <div style={{flexGrow: 1}}>
       <AppBar position="static" style = {{backgroundColor: "#12517A"}} >
@@ -38,9 +69,8 @@ import Signup from './Signup.js';
                 </BrowserRouter>
               </Bttn>
             </div>
-            <div class = "EndButtons" style = {{display: "flex"}}>
-                <Login />
-                <Signup />
+            <div>
+              {userButtons()}
             </div>
             <ToastsContainer store={ToastsStore} />
           </div>
@@ -49,3 +79,5 @@ import Signup from './Signup.js';
       </div>
     );
   }
+}
+  export default Home;
