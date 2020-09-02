@@ -7,14 +7,14 @@ import { connect } from "react-redux";
 import { logout } from "../actions/session";
 
 
-const mapStateToProps = ({ session }) => ({
-    session
+const mapStateToProps = ({ errors }) => ({
+    errors
 });
   const mapDispatchToProps = dispatch => ({
     logout: () => dispatch(logout())
 });
 
-const Logout = ({ logout, session }) => {
+const Logout = ({ errors, logout }) => {
     const handleSubmit = event => {
         event.preventDefault();
         logout();
