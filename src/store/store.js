@@ -5,6 +5,9 @@ import reducer from "../reducers/root";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import { reduxTimeout } from 'redux-timeout'
+
+
 const persistConfig = {
     key: 'root',
     storage,
@@ -16,7 +19,7 @@ export default preloadedState => {
     let store = createStore(
         persistedReducer,
         preloadedState,
-        applyMiddleware(thunk)
+        applyMiddleware(thunk, reduxTimeout())
     )
 
     let persistor = persistStore(store)
