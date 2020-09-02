@@ -27,13 +27,6 @@ const Signup = ({ errors, signup }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    const templateId = "template_FNZvTKs9";
-    const templateParams = {
-      email: params.email,
-      firstName: params.firstName
-    }
-
     const user = {
       email: params.email,
       password: params.password,
@@ -41,8 +34,16 @@ const Signup = ({ errors, signup }) => {
       lastName: params.lastName,
       contactNumber: params.contactNumber
     };
-    signup(user);
-    sendFeedback(templateId, templateParams);
+    signup(user).then(res => {
+      if (res.type === "RECEIVE_CURRENT_USER") {
+        const templateId = "template_FNZvTKs9";
+        const templateParams = {
+          email: params.email,
+          firstName: params.firstName
+        }
+        sendFeedback(templateId, templateParams);
+      }
+    });
   };
 
   const handleClickOpen = () => {
