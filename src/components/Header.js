@@ -13,37 +13,29 @@ import Login from './Login.js';
 import Signup from './Signup.js';
 import Logout from './Logout.js';
 
+import { connect } from "react-redux";
+
+const mapStateToProps = ({ session }) => ({
+  session
+});
 
 class Home extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      isLoggedIn: true
-    };
-  }
-
-  handleClick = state => {
-    this.setState({
-      isLoggedIn: state
-    });
-  }
-  
   render() {
     const userButtons = () => {
       return (
         <div>
-          {this.state.isLoggedIn ? (
-            <Logout handleClick = {this.handleClick}/>
+          {this.props.session.userId ? (
+            <Logout/>
           ) : (
             <div style = {{display: "flex"}}>
-              <Login handleClick = {this.handleClick}/>
+              <Login />
               <Signup />
             </div>
           )}
         </div>
       );
     }
-    
+
     return (
       <div style={{flexGrow: 1}}>
       <AppBar position="static" style = {{backgroundColor: "#12517A"}} >
@@ -80,4 +72,7 @@ class Home extends Component {
     );
   }
 }
-  export default Home;
+
+export default connect(
+  mapStateToProps
+)(Home);

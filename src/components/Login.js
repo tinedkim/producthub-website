@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   login: user => dispatch(login(user))
 });
 
-const Login = ({ errors, login , props}) => {
+const Login = ({ errors, login }) => {
   const [isLogin, setLogin] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [params, setParams] = React.useState({
@@ -27,7 +27,6 @@ const Login = ({ errors, login , props}) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    props.handleClick(true);
     const user = {
       email: params.email,
       password: params.password,

@@ -29,11 +29,14 @@ sessionRouter.post("", async (req, res) => {
 });
 
 // Logout
-sessionRouter.delete("", ({ session }, res) => {
+sessionRouter.delete("", async (req, res) => {
     try {
-        const user = session.user;
+        const user = {
+            userId: req.body.userId,
+            email: req.body.email
+        }
         if (user) {
-            session.destroy(err => {
+            req.session.destroy(err => {
                 if (err) throw (err);
                 res.clearCookie(SESS_NAME);
                 res.send(user);
