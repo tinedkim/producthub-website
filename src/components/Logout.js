@@ -11,17 +11,13 @@ const mapStateToProps = ({ session }) => ({
     session
 });
   const mapDispatchToProps = dispatch => ({
-    logout: (user) => dispatch(logout(user))
+    logout: () => dispatch(logout())
 });
 
 const Logout = ({ logout, session }) => {
     const handleSubmit = event => {
         event.preventDefault();
-        const user = {
-            userId: session.userId,
-            email: session.email
-        };
-        logout(user);
+        logout();
     };
 
     return (

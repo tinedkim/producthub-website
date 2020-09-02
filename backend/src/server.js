@@ -19,7 +19,7 @@ import { PORT, NODE_ENV, MONGO_URI, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from
         const MongoStore = connectStore(session);
 
         app.disable('x-powered-by');
-        app.use(cors());
+        app.use(cors({credentials: true, origin: true}));
         app.use(express.urlencoded({ extended: true }));
         app.use(express.json());
         app.use(session({

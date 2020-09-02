@@ -2,6 +2,7 @@ export const login = user => (
     //fetch("/api/session", {
     fetch("http://localhost:5000/api/session", {
         method: "POST",
+        credentials: 'include',
         body: JSON.stringify(user),
         headers: {
             "Content-Type": "application/json"
@@ -13,6 +14,7 @@ export const signup = user => (
     //fetch("/api/users", {
     fetch("http://localhost:5000/api/users", {
         method: "POST",
+        credentials: 'include',
         body: JSON.stringify(user),
         headers: {
             "Content-Type": "application/json"
@@ -20,14 +22,11 @@ export const signup = user => (
     })
 );
 
-export const logout = user => (
+export const logout = () => (
     //fetch("/api/session", {
     fetch("http://localhost:5000/api/session", {
         method: "DELETE",
-        body: JSON.stringify(user),
-        headers: {
-            "Content-Type": "application/json"
-        }
+        credentials: 'include'
     })
 );
 

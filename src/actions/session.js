@@ -33,8 +33,8 @@ export const signup = user => async dispatch => {
     return dispatch(receiveErrors(data));
 };
 
-export const logout = user => async dispatch => {
-    const response = await apiUtil.logout(user);
+export const logout = () => async dispatch => {
+    const response = await apiUtil.logout();
     const data = await response.json();
 
     if (response.ok) {
