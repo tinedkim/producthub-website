@@ -21,19 +21,13 @@ const mapDispatchToProps = dispatch => ({
 const Signup = ({ errors, signup }) => {
   const [isLogin] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const [isError, setError] = React.useState(false);
   const [params, setParams] = React.useState({
     email: null, password: null, firstName: null, lastName: null, contactNumber: null
   });
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    const templateId = "template_FNZvTKs9";
-    const templateParams = {
-      email: params.email,
-      firstName: params.firstName
-    }
-
     const user = {
       email: params.email,
       password: params.password,
@@ -41,9 +35,21 @@ const Signup = ({ errors, signup }) => {
       lastName: params.lastName,
       contactNumber: params.contactNumber
     };
-    signup(user);
-    sendFeedback(templateId, templateParams);
+    signup(user).then(res => {
+      if (res.type === "RECEIVE_CURRENT_USER") {
+        const templateId = "template_FNZvTKs9";
+        const templateParams = {
+          email: params.email,
+          firstName: params.firstName
+        }
+        sendFeedback(templateId, templateParams);
+      }
+      else {
+        setError(true);
+      }
+    });
   };
+  
 
   const handleClickOpen = () => {
       setOpen(true);
@@ -61,8 +67,8 @@ const Signup = ({ errors, signup }) => {
       ...params, [name]: value}
     )
 
-    const logErrors = ({errors, [name]: value}) => {
-      console.log(errors)
+    const logErrors = ({params, [name]: value}) => {
+      console.log(params)
     }
 }
 
@@ -116,8 +122,19 @@ const Signup = ({ errors, signup }) => {
                   onSubmit={handleSubmit}
               >
                   <Form.Group controlId="Header" className="space">
-                  <h1 style={{ textAlign: "center" }}>Sign Up</h1>
+                    <h1 style={{ textAlign: "center" }}>Sign Up</h1>
                   </Form.Group>
+
+                  <Form.Group className="error">
+                    {isError && <p style=
+                      {{textAlign: "center",
+                        color: "#ed4337",
+                        fontSize: "0.9rem",
+                        fontStyle: "oblique"}}>
+                        There is an error: {errors}
+                    </p>}
+                  </Form.Group>
+
                   <Form.Row>
                   <Form.Group as={Col} controlId="formGridEmail">
                       <Form.Label style={{ fontSize: 18 }}>Email</Form.Label>
