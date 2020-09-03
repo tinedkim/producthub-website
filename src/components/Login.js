@@ -18,34 +18,29 @@ const mapDispatchToProps = dispatch => ({
   login: user => dispatch(login(user))
 });
 
-<<<<<<< HEAD
 const Login = ({ errors, login }) => {
-=======
-const Login = ({ errors, login , props}) => {
->>>>>>> 7ea4ea63b4e64dc9ed79c92a8f378bef19423a31
   const [isLogin, setLogin] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
   const [isError, setError] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const [params, setParams] = React.useState({
-    email: null, passwford: null
+    email: null, password: null
   });
 
   const handleSubmit = event => {
     event.preventDefault();
-<<<<<<< HEAD
-=======
-    props.handleClick(true);
->>>>>>> 7ea4ea63b4e64dc9ed79c92a8f378bef19423a31
     const user = {
       email: params.email,
       password: params.password,
     };
-    login(user);
-    
-    //else {setError(true)}
+    login(user).then(res => {
+      if (res.type === "RECEIVE_CURRENT_USER") {
+        console.log("Successfully logged in")
+      }
+      else {
+        setError(true);
+      }
+    });
   };
-
-
 
   const handleClickOpen = () => {
       setOpen(true);
