@@ -12,6 +12,7 @@ import {Link, BrowserRouter} from 'react-router-dom';
 import Login from './Login.js';
 import Signup from './Signup.js';
 import Logout from './Logout.js';
+<<<<<<< HEAD
 
 import { connect } from "react-redux";
 
@@ -36,6 +37,40 @@ class Home extends Component {
       );
     }
 
+=======
+
+
+class Home extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      isLoggedIn: true
+    };
+  }
+
+  handleClick = state => {
+    this.setState({
+      isLoggedIn: state
+    });
+  }
+  
+  render() {
+    const userButtons = () => {
+      return (
+        <div>
+          {this.state.isLoggedIn ? (
+            <Logout handleClick = {this.handleClick}/>
+          ) : (
+            <div style = {{display: "flex"}}>
+              <Login handleClick = {this.handleClick}/>
+              <Signup />
+            </div>
+          )}
+        </div>
+      );
+    }
+    
+>>>>>>> 7ea4ea63b4e64dc9ed79c92a8f378bef19423a31
     return (
       <div style={{flexGrow: 1}}>
       <AppBar position="static" style = {{backgroundColor: "#12517A"}} >
@@ -72,7 +107,11 @@ class Home extends Component {
     );
   }
 }
+<<<<<<< HEAD
 
 export default connect(
   mapStateToProps
 )(Home);
+=======
+  export default Home;
+>>>>>>> 7ea4ea63b4e64dc9ed79c92a8f378bef19423a31
