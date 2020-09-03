@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => ({
 
 const Login = ({ errors, login }) => {
   const [isLogin, setLogin] = React.useState(false);
+  const [isError, setError] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [params, setParams] = React.useState({
     email: null, password: null
@@ -31,7 +32,14 @@ const Login = ({ errors, login }) => {
       email: params.email,
       password: params.password,
     };
-    login(user);
+    login(user).then(res => {
+      if (res.type === "RECEIVE_CURRENT_USER") {
+        console.log("Successfully logged in")
+      }
+      else {
+        setError(true);
+      }
+    });
   };
 
   const handleClickOpen = () => {
@@ -92,6 +100,17 @@ const Login = ({ errors, login }) => {
                       <Form.Group controlId="Header" className="space">
                         <h1 style={{ textAlign: "center" }}>Login</h1>
                       </Form.Group>
+
+                      <Form.Group className="error">
+                        {isError && <p style=
+                          {{textAlign: "center",
+                            color: "#ed4337",
+                            fontSize: "0.9rem",
+                            fontStyle: "oblique"}}>
+                            There is an error: {errors}
+                        </p>}
+                      </Form.Group>
+
                       <Form.Group controlId="formBasicEmail">
                         <Form.Label style={{ fontSize: 18 }}>
                           Email address
