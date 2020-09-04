@@ -23,7 +23,7 @@ const Login = ({ errors, login }) => {
   const [isError, setError] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [params, setParams] = React.useState({
-    email: null, password: null
+    email: "", password: ""
   });
 
   const handleSubmit = event => {
@@ -107,7 +107,7 @@ const Login = ({ errors, login }) => {
                             color: "#ed4337",
                             fontSize: "0.9rem",
                             fontStyle: "oblique"}}>
-                            There is an error: {errors}
+                            Error: {errors}
                         </p>}
                       </Form.Group>
 

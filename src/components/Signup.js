@@ -23,7 +23,7 @@ const Signup = ({ errors, signup }) => {
   const [open, setOpen] = React.useState(false);
   const [isError, setError] = React.useState(false);
   const [params, setParams] = React.useState({
-    email: null, password: null, firstName: null, lastName: null, contactNumber: null
+    email: "", password: "", firstName: "", lastName: "", contactNumber: ""
   });
 
   const handleSubmit = event => {
@@ -49,7 +49,7 @@ const Signup = ({ errors, signup }) => {
       }
     });
   };
-  
+
 
   const handleClickOpen = () => {
       setOpen(true);
@@ -131,7 +131,7 @@ const Signup = ({ errors, signup }) => {
                         color: "#ed4337",
                         fontSize: "0.9rem",
                         fontStyle: "oblique"}}>
-                        There is an error: {errors}
+                        Error: {errors}
                     </p>}
                   </Form.Group>
 
