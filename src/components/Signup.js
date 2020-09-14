@@ -49,6 +49,7 @@ const Signup = ({ errors, signup }) => {
       }
     });
   };
+  
 
 
   const handleClickOpen = () => {
